@@ -16,4 +16,11 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 ### Sessions
 + [Introduction](https://deeplearningub.github.io/deep0)
 + [Session 1](https://deeplearningub.github.io/deep1)
-+ Session 2
++ [Session 2](https://deeplearningub.github.io/deep2)
++ [Session 3](https://deeplearningub.github.io/deep3)
++ [Session 4](https://deeplearningub.github.io/deep4)
++ [Session 5](https://deeplearningub.github.io/deep5)
++ [Session 6](https://deeplearningub.github.io/deep6)
++ [Session 7](https://deeplearningub.github.io/deep7)
++ [Session 8](https://deeplearningub.github.io/deep8)
++ [Session 9](https://deeplearningub.github.io/deep9)

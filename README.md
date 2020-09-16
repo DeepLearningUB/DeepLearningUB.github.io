@@ -1,6 +1,6 @@
 # DeepLearningUB.github.io
 
-## Deep Learning
+## Deep Learning MSc Course 2020-2021
 
 Deep learning is one of the fastest growing areas of machine learning and a hot topic in both academia and industry. This course will cover the basics of deep learning by using a hands-on approach.
 

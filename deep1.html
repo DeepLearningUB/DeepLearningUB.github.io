@@ -34,22 +34,26 @@ Jordi Vitrià, Universitat de Barcelona, 2020 <br>
 !!! Note Exercise
     Open this [Notebook](https://colab.research.google.com/notebooks/empty.ipynb) in Colab.
 
-# Learning: Basic Concepts
+!!! Note Exercise
+    Open this [Notebook](https://colab.research.google.com/github/DeepLearningUB/DeepLearningUB.github.io/blob/master/deep1.ipynb) in Colab.
 
-!!! Note Definition
-    Data is an individual unit that contains raw material, corresponding to some "observation", which is agnostic of any specific meaning. Information is a group of data that collectively carry a logical meaning. 
+# Learning: Basic Concepts
 
 We are living in an increasingly data-rich world. These data is useful if we can extract from them insights/knowledge that are useful for humans. The first step is to transform data into information, but we will terms in an interchangeble way. 
 
-Information is useful for humans only if there are associations, patterns and relationships present in the data. If not, it is only noise.
+!!! Note Definition
+    Data is an individual unit that contains raw material, corresponding to some *observation*, which is agnostic of any specific meaning. Information is a group of data that collectively carry a meaning for the *observer*. 
 
-The process of inferring stable relationships from data is called *learning*. Learning is a critical component of (human) intelligence and also is necessary for adaptation of all living organisms to a changing environment. 
+Information is useful for humans only **if there are associations, patterns and relationships present in the data**. If not, it is only noise.
 
-Human knowledge is mainly based on observations of repeatable events. It is a result of **generalization** from many observed instances. This process is called **induction**. 
+!!! Note Definition
+    The process of inferring stable relationships from data is called *learning*. Learning is a critical component of (human) intelligence and also is necessary for adaptation of all living organisms to a changing environment. 
+
+Human **knowledge** is mainly based on observations of repeatable events. It is a result of **generalization** from many observed instances. This process is called **induction**. 
 
 Some kind of knowledge can be purely *data-driven* (empirical) or it can be *scientific*. *Data-driven* knowledge can predict some kind of events. *Scientific* knowledge can predict and explain (in terms of a small number of basic concepts) many seemingly unrelated events. 
 
-Knowledge is represented by models. Data-driven modeling poses a set of challenging questions:
+Knowledge is represented by **models**. Data-driven modeling poses a set of challenging questions:
 + How to measure the quality of explanations and predictions?
 + Under what conditions is it possible to produce good predictions?
 + How to decide what is the most plausible model when several models are equally good at predicting some kind of events?
@@ -61,10 +65,10 @@ Learning from data can be approached from two distinct (and sometimes complement
 
 In classical statistics, regularity in data from an unkwnown system is described via a **probabilistic model or statistical distribution** that represents the real world. Thus, given observations of data samples, our goal is to estimate this distribution. The main assumption in this case is that the distribution can be used for both explaining the system and making predictions. 
 
-In practice, this approach can be too limited because probabilities depend on too many unknown factors or becasue they cannot be reliably estimated from data. In this case, the alternative approach is to make predictions/decisions based on a model devised to **minimize the known risk of past events**, resulting in a function that is estimated from noisy samples. This approach does not explain why things happen, but *imitates* certain properties of the unknown statistical system that are useful for succesful predictions.
+In practice, this approach can be too limited because probabilities depend on too many unknown factors or becasue we don't know how the world works. In this case, the alternative approach is to make predictions/decisions based on a model devised to **minimize the known risk of past events**, resulting in a function that is estimated from noisy samples. This approach does not explain why things happen, but *imitates* certain properties of the unknown statistical system that are useful for succesful predictions.
 
 !!! Note
-    The risk minimization approach is also the main practical alternative when the number of data samples is reduced by comparison with the number of features of the data. In this scenario the classical approach falls apart. 
+    The risk minimization (**machine learning**) approach is also the main practical alternative when the number of data samples is reduced by comparison with the number of features of the data. In this scenario the classical approach falls apart. 
 
 Deep learning can be used in both approaches and in this course we will see several examples of its application. 
 
@@ -86,14 +90,14 @@ The most common learning tasks are **supervised learning** and **regression**.
 
 Consider an unknown joint probability distribution $P(X,Y)$ where $X$ represent data samples (numerical data, images, sounds, text, time series, etc.) and $Y$ their corresponding labels.
 
-!!! Note
+!!! Note Notation
     Simple letters such as $y$ represent scalar values. Bold letters $\mathbf{x}$ represent vectors. Subscripts can represent elements of a set or vector. 
 
     Capital letters such as $X$ represent random variables.
 
 Assume we have a training dataset 
-$(\mathbf{x}_i,y_i) \sim P(X,Y)$ composed of $N$ i.i.d samples from $P(X,Y)$,
-with $\mathbf{x}_i \in \mathcal{X}$, $y_i \in \mathcal{Y}$, $i=1, ..., N.$ In general, $\mathbf{x}_i$ is a $p$-dimensional vector of features, $y_i$ is a category or a real value.
+$(\mathbf{x}_i,y_i) \sim P(X,Y)$ composed of $N$ independent and identically distributed (or i.i.d.) samples from $P(X,Y)$,
+with $\mathbf{x}_i \in \mathcal{X}$, $y_i \in \mathcal{Y}$, $i=1, ..., N.$ In general, $\mathbf{x}_i$ is a $p$-dimensional vector of (real or categorical) features and $y_i$ is a category or a real value.
 
 !!! Note
     In probability theory and statistics, a collection of random variables is independent and identically distributed (i.i.d.) if each random variable has the same probability distribution as the others and all are mutually independent.
@@ -102,33 +106,35 @@ Supervised learning is usually concerned with the two following (**inference**) 
 
 - **Classification**: Given a set of $(\mathbf{x}_i, y_i) \in \mathcal{X}\times\mathcal{Y} = \mathbb{R}^p \times \{1, ..., C\}$, for $i=1, ..., N$, we want to estimate for any new $\mathbf{x}$, $\operatorname{argmax}_y P(Y=y|X=\mathbf{x})$. Informally, we can say that Classification consists in identifying a decision boundary between elements of distinct classes.
 
--  **Regression**: Given a set of $(\mathbf{x}_i, y_i) \in \mathcal{X}\times\mathcal{Y} = \mathbb{R}^p \times \mathbb{R}$, for $i=1, ..., N$, we want to estimate for any new $\mathbf{x}$, a sample statistic such as $\mathbb{E}\left[ Y|X=\mathbf{x} \right]$. Informally we can say that regression aims at estimating numerical relationships among several variables.
+-  **Regression**: Given a set of $(\mathbf{x}_i, y_i) \in \mathcal{X}\times\mathcal{Y} = \mathbb{R}^p \times \mathbb{R}$, for $i=1, ..., N$, we want to estimate for any new $\mathbf{x}$, a sample statistic such as the expectation: $\mathbb{E}\left[ Y|X=\mathbf{x} \right]$. Informally we can say that regression aims at estimating numerical relationships among several variables.
 
-!!! Note
+!!! Note Definition
     A **sample statistic** is any quantity computed from values in a sample that is used for a statistical purpose such as representing the sample.
 
-!!! Note
-    In general, **inference** is concerned with the conditional estimation
-    $P(Y=y|X=\mathbf{x})$ for any new $(\mathbf{x},y)$ and to this end it produces a function $f : \mathcal{X} \to \mathcal{Y}$ by using a **learning algorithm**.
+
+In general, **inference** is concerned with the conditional estimation
+$P(Y=y|X=\mathbf{x})$ for any new $(\mathbf{x},y)$ and to this end it produces a function $f : \mathcal{X} \to \mathcal{Y}$ by using a **learning algorithm**.
 
 !!! Warning
-    In order to produce a good estimation for  any new $(\mathbf{x},y)$ we need to assume some hypothesis. 
+    We are in front of an interpolation problem. In order to produce a good estimation for  any new $(\mathbf{x},y)$ we need to assume some hypothesis. 
 
 Consider a function $f : \mathcal{X} \to \mathcal{Y}$ produced by some learning algorithm. 
 
-The predictions of this function can be evaluated through a loss function
+Let's suppose the predictions of this function can be evaluated through a loss function
 $\ell : \mathcal{Y} \times  \mathcal{Y} \to \mathbb{R}$,
-such that $\ell(y, f(\mathbf{x})) \geq 0$ measures how close the prediction $f(\mathbf{x})$ from $y$ is. This function will encode our assumptions regarding what is a good inference function.
+such that $\ell(y, f(\mathbf{x})) \geq 0$ measures how close the prediction $f(\mathbf{x})$ from $y$, the true outcome, is. This function will encode part of our assumptions regarding what is a good inference function.
+
+These are some examples:
 
 !!! Note Regression Loss Function
-    The most simple loss function is the **squared error** loss function: $\ell(y,f(\mathbf{x})) = (y - f(\mathbf{x}))^2$.
+    The most traditional regression loss function is the **squared error** loss function: $\ell(y,f(\mathbf{x})) = (y - f(\mathbf{x}))^2$.
 
 !!! Note Classification Loss Function
-    The most simple loss function is the **zero-one** loss function: $\ell(y,f(\mathbf{x})) = \mathbf{1}_{y \neq f(\mathbf{x})}$. 
+    The most simple classification loss function is the **zero-one** loss function: $\ell(y,f(\mathbf{x})) = \mathbf{1}_{y \neq f(\mathbf{x})}$. 
 
 As we said before, there are two goals of learning: explanation and prediction. Using the loss function we can measure the quality of these goals. 
 
-Given traning datam, the **empirical risk** is:
+Given a set of traning data, the **empirical risk** can be defined as:
 
 $$ R_{e} = \frac{1}{n} \sum_{i=1}^n \ell(y_i,f(\mathbf{x}_i)) $$
 
@@ -138,14 +144,14 @@ The quality of prediction is more difficult to evaluate, but if test data (data 
 
 $$ R = \frac{1}{T} \sum_{t=1}^n \ell(y_t,f(\mathbf{x}_t)) $$
 
-The goal of learning is estimating a function $(\mathbf{x})$ providing small prediction risk. 
+!!! Note Definition
+    The goal of learning is estimating a function $f(\mathbf{x})$ providing small **prediction risk**. 
 
 ### What about $f$?
 
-The process of estimating a predictive model involves three components:
-+ Input samples $(\mathbf{x},y)$, including training and test data (generated from the same distribution). 
-+ A system that generates an output $y$ for every input $\mathbf{x}$ according to some unknown conditional probability desity $p(y|\mathbf{x})$.
-+ A predictive estimator, implemented by an algorithm that selects the best model from a given set of functions (or **admissible models**) $f(\mathbf{x}, \omega), \omega   \in \Omega$, where $\Omega$ is a set of parameters used to indedx the set of functions. This set of functions must be set *a priori*. 
+The process of estimating a predictive model involves two components:
++ Input samples $(\mathbf{x},y)$, including training and test data, generated according to some unknown conditional probability desity $P(Y|\mathbf{X})$. 
++ A predictive estimator, implemented by an algorithm that selects the best model from a given set of functions (or **admissible models**) $f(\mathbf{x}, \omega), \omega   \in \Omega$, where $\Omega$ is a set of parameters used to index the set of functions. This set of functions must be set *a priori*. 
 
 Let $\mathcal{F}$ denote the the set of all functions $f$ than can be produced by the chosen learning algorithm. This is the **hypotheses space**.
 
@@ -158,7 +164,7 @@ In practice, capacity can be controlled through hyper-parameters of the learning
 
 - The degree of the family of polynomials;
 - The number of units and layers in a neural network;
-- Regularization terms.
+- Etc.
 
 ## Statistical Learning Theory
 
@@ -176,7 +182,7 @@ compute an estimate, the empirical risk (or training error):
 
 $$\hat{R}(f, \mathbf{D}) = \frac{1}{N} \sum_{(\mathbf{x}_i, y_i) \in \mathbf{D}} \ell(y_i, f(\mathbf{x}_i))$$
 
-It can be shown that this estimate is <a onclick="document.getElementById('unbiased').style.display='block'" href="#myModal">unbiased</a> and can be used for finding a good enough approximation of $f^*$. This results into the empirical risk minimization principle:
+It can be shown that this estimate is *unbiased* and can be used for finding a good enough approximation of $f^*$. This results into the empirical risk minimization principle:
 
 $$f^*_{\mathbf{D}} = \operatorname{argmin}_{f \in \mathcal{F}} \hat{R}(f, \mathbf{D})$$
 
@@ -204,23 +210,36 @@ Unbiased means that the expected empirical risk estimate (over $D$) is the expec
 
 Most machine learning algorithms, including neural networks, implement empirical risk minimization.
 
-## Learning a model.
+## Algorithmic learning of a model.
 
 Most of these algorithms are based on the *iterative solution* of a mathematical problem that involves data and model. If there was an analytical solution to the problem, this should be the adopted one, but this is not the case in general.
 
-So, the most common strategy for **learning from data** is based on solving a system of equations as a way to find a series of parameters of the model that minimizes a mathematical problem. This is called **optimization**.
+So, the most common strategy for **learning from data** is based on finding a series of parameters of the model that minimizes a mathematical problem. This is called **optimization**.
 
 The most important technique for solving optimization problems is **gradient descend**.
+
+!!! Note Homework
+    Reading: [How do I evaluate a model?](https://sebastianraschka.com/faq/docs/evaluate-a-model.html)
+
+    Reading: [How to measure classification performance?](https://becominghuman.ai/understand-classification-performance-metrics-cad56f2da3aa)
 
 
 
 # Optimization
 
-## Preliminary: Nelder-Mead method for function minimization.
+!!! Warning
+    The maximum or minimum over the entire function is called a *global* maximum or minimum. There is only one global maximum (and one global minimum) but there can be more than one local maximum or minimum. The most common optimization algorithms, such as Gradient Descend, are not devised to find global extrema and can be "attracted" by local extrema. Deep Learning circumvents this problem by using Stochastic Gradient Descend, a noisy version of Gradient Descend.
 
-The most simple thing we can try to minimize a function $f(x)$ would be to sample two points relatively near each other, and just repeatedly take a step down away from the largest value. This simple algorithm has a severe limitation: it can't get closer to the true minima than the step size.  
+    In the following we will only consider minimization of $f(x)$. Maximization can be implemented by considering the minimization of $-f(x)$. 
 
-The Nelder-Mead method dynamically adjusts the step size based off the loss of the new point. If the new point is better than any previously seen value, it **expands** the step size to accelerate towards the bottom. Likewise if the new point is worse it **contracts** the step size to converge around the minima. The usual settings are to half the step size when contracting and double the step size when expanding. 
+## Nelder-Mead method for function minimization.
+
+The most simple thing we can try to minimize a function $f(x)$ would be to sample two points relatively near each other, $f(x_1)$ and $f(x_2)$, and just repeatedly take a step down away from the largest value. That is, if $f(x_1) > f(x_2)$, we consider in the next step $f(x_2)$ and $f(x_3)$, such that $x_3$ is larger and not far from $x_2$. If $f(x_1) < f(x_2)$, we consider in the next step $f(x_3)$ and $f(x_1)$, such that $x_3$ is smaller and not far from $x_1$. The algorithm stops when $f(x_3)$ is not smaller than $f(x_1)$ and $f(x_2)$. 
+
+
+This simple algorithm has a severe limitation: it can't get closer to the true minima than the step size we consider to implement "*not far from*".  
+
+The Nelder-Mead method dynamically adjusts the step size based on the loss **of the new point**. If the new point is better than any previously seen value, it **expands** the step size to accelerate towards the bottom. Likewise if the new point is worse it **contracts** the step size to converge around the minima. The usual settings are to half the step size when contracting and double the step size when expanding. 
 
 This method can be easily extended into higher dimensional examples, all that's required is taking one more point than there are dimensions. Then, the simplest approach is to replace the worst point with a point reflected through the centroid of the remaining n points. If this point is better than the best current point, then we can try stretching exponentially out along this line. On the other hand, if this new point isn't much better than the previous value, then we are stepping across a valley, so we shrink the step towards a better point.
 
@@ -235,7 +254,7 @@ Let's suppose that we have a function $f: \mathbb{R} \rightarrow \mathbb{R}$. Fo
 
 $$f(x) = x^2$$
 
-Our objective is to find the argument  $x$ that minimizes this function (for maximization, consider $-f(x)$). To this end, the critical concept is the **derivative**.
+Our objective is to find the argument  $x$ that minimizes this function. To this end, the critical concept is the **derivative**.
 
 The derivative of $f$ of a variable $x$, $f'(x)$ or $\frac{\mathrm{d}f}{\mathrm{d}x}$,  is a measure of the rate at which the value of the function changes with respect to the change of the variable. It is defined as the following limit:
 
@@ -260,16 +279,19 @@ Then, we can follow these steps to decrease the value of the function:
 + Compute the derivative $f'(x) = \lim_{h \rightarrow 0} \frac{f(x + h) - f(x - h)}{2h}$.
 + Walk a small step (possibly weighted by the derivative module) in the **opposite** direction of the derivative, because we know that $f(x - h \mbox{ sign}(f'(x))$ is less than $f(x)$ for  small enough $h$. 
 
-The search for the minima ends when the derivative is zero because we have no more information about which direction to move. $x$ is a **critical** o stationary point if $f'(x)=0$. 
+The search for the minima ends when the derivative is zero because we have no more information about which direction to move. 
+
+$x$ is a **critical** o stationary point if $f'(x)=0$. 
 
  + A **minimum (maximum)** is a critical point where $f(x)$ is lower (higher) than at all neighboring points. 
- + There is a third class of critical points: **saddle points**.
+ + There is a third class of critical points: [**saddle points**](https://en.wikipedia.org/wiki/Saddle_point).
+
 
 If $f$ is a **convex function**, this should be the minimum (maximum) of our functions. In other cases it could be a local minimum (maximum) or a saddle point.
 
 There are two problems with numerical derivatives:
-+ It is approximate.
-+ It is very slow to evaluate (two function evaluations: $f(x + h) , f(x - h)$ ).
++ They are approximate.
++ They are slower than necessary to evaluate (we need two function evaluations: $f(x + h) , f(x - h)$).
 
 Our knowledge from Calculus could help!
 
@@ -292,6 +314,9 @@ But you can also find the local minimum by using **gradient descend**:
 + Start from a random $x$ value.
 + Compute the derivative $f'(x)$ analitically.
 + Walk a small step in the **opposite** direction of the derivative. 
+
+!!! Note Exercise
+    Open this [notebook](https://colab.research.google.com/github/DeepLearningUB/DeepLearningUB.github.io/blob/master/deep1.ipynb) in Colab and solve exercise 1.
 
 ## From derivatives to gradient
 

@@ -1,0 +1,575 @@
+<meta charset="utf-8" emacsmode="-*- markdown -*-">
+<link rel="stylesheet" href="apiDSBCN.css">
+<link rel="stylesheet" href="apidoc.css?">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<link href='https://fonts.googleapis.com/css?family=Carrois Gothic SC' rel='stylesheet'>
+<head>
+<style>
+
+</style>
+</head>
+
+
+<center> 
+<p style="font-size:12px; font-family: 'Carrois Gothic SC'; color:grey"; line-height: 1.0rem>
+<b> Deep Learning Course v2.0 </b><br>
+Master in Fundamental Principles of Data Science <br>
+Jordi Vitrià, Universitat de Barcelona, 2020 <br>
+</p>
+</center>
+
+<div class="center">
+<p style="text-align:left;">
+     [<i class="material-icons">fast_rewind</i> Previous Page](deep0.html)
+    <span style="float:right;">
+        [Next Page <i class="material-icons">fast_forward</i>](deep2.html)  
+    </span>
+</p>
+</div>
+
+
+!!! Note Exercise
+    Open this [Notebook](https://colab.research.google.com/notebooks/empty.ipynb) in Colab.
+
+# Learning: Basic Concepts
+
+!!! Note Definition
+    Data is an individual unit that contains raw material, corresponding to some "observation", which is agnostic of any specific meaning. Information is a group of data that collectively carry a logical meaning. 
+
+We are living in an increasingly data-rich world. These data is useful if we can extract from them insights/knowledge that are useful for humans. The first step is to transform data into information, but we will terms in an interchangeble way. 
+
+Information is useful for humans only if there are associations, patterns and relationships present in the data. If not, it is only noise.
+
+The process of inferring stable relationships from data is called *learning*. Learning is a critical component of (human) intelligence and also is necessary for adaptation of all living organisms to a changing environment. 
+
+Human knowledge is mainly based on observations of repeatable events. It is a result of **generalization** from many observed instances. This process is called **induction**. 
+
+Some kind of knowledge can be purely *data-driven* (empirical) or it can be *scientific*. *Data-driven* knowledge can predict some kind of events. *Scientific* knowledge can predict and explain (in terms of a small number of basic concepts) many seemingly unrelated events. 
+
+Knowledge is represented by models. Data-driven modeling poses a set of challenging questions:
++ How to measure the quality of explanations and predictions?
++ Under what conditions is it possible to produce good predictions?
++ How to decide what is the most plausible model when several models are equally good at predicting some kind of events?
+
+!!! Note
+    In general **Learning from Data** is a scientific discipline that is concerned with the design and development of algorithms that allow computers to infer (from data) a  model that allows *compact representation* (unsupervised learning) and/or *good generalization* (supervised learning).
+
+Learning from data can be approached from two distinct (and sometimes complementary) disciplines: **statistical modeling** and **statistical learning theory**. 
+
+In classical statistics, regularity in data from an unkwnown system is described via a **probabilistic model or statistical distribution** that represents the real world. Thus, given observations of data samples, our goal is to estimate this distribution. The main assumption in this case is that the distribution can be used for both explaining the system and making predictions. 
+
+In practice, this approach can be too limited because probabilities depend on too many unknown factors or becasue they cannot be reliably estimated from data. In this case, the alternative approach is to make predictions/decisions based on a model devised to **minimize the known risk of past events**, resulting in a function that is estimated from noisy samples. This approach does not explain why things happen, but *imitates* certain properties of the unknown statistical system that are useful for succesful predictions.
+
+!!! Note
+    The risk minimization approach is also the main practical alternative when the number of data samples is reduced by comparison with the number of features of the data. In this scenario the classical approach falls apart. 
+
+Deep learning can be used in both approaches and in this course we will see several examples of its application. 
+
+## Learning from data
+
+This is an important technology because it enables computational systems to adaptively improve their performance with experience accumulated from the observed data.
+
+!!! Warning
+    **Learning from Data** is not the answer to all questions. Observed data represents the world as it is. If we want to explore alternative worlds we must rely in other disciplines: causality, imagination, etc.
+    
+    **Learning from Data** is the answer to *"How"* questions. *"Why"* and *"What if"* questions are beyond its scope.
+
+In the next we will interpret learning as function estimation from noisy samples. This estimation is based in past observations, known as *training data*. The estimated function is used to predict values for new inputs. 
+
+The most common learning tasks are **supervised learning** and **regression**.
+
+
+### Supervised learning
+
+Consider an unknown joint probability distribution $P(X,Y)$ where $X$ represent data samples (numerical data, images, sounds, text, time series, etc.) and $Y$ their corresponding labels.
+
+!!! Note
+    Simple letters such as $y$ represent scalar values. Bold letters $\mathbf{x}$ represent vectors. Subscripts can represent elements of a set or vector. 
+
+    Capital letters such as $X$ represent random variables.
+
+Assume we have a training dataset 
+$(\mathbf{x}_i,y_i) \sim P(X,Y)$ composed of $N$ i.i.d samples from $P(X,Y)$,
+with $\mathbf{x}_i \in \mathcal{X}$, $y_i \in \mathcal{Y}$, $i=1, ..., N.$ In general, $\mathbf{x}_i$ is a $p$-dimensional vector of features, $y_i$ is a category or a real value.
+
+!!! Note
+    In probability theory and statistics, a collection of random variables is independent and identically distributed (i.i.d.) if each random variable has the same probability distribution as the others and all are mutually independent.
+
+Supervised learning is usually concerned with the two following (**inference**) problems:
+
+- **Classification**: Given a set of $(\mathbf{x}_i, y_i) \in \mathcal{X}\times\mathcal{Y} = \mathbb{R}^p \times \{1, ..., C\}$, for $i=1, ..., N$, we want to estimate for any new $\mathbf{x}$, $\operatorname{argmax}_y P(Y=y|X=\mathbf{x})$. Informally, we can say that Classification consists in identifying a decision boundary between elements of distinct classes.
+
+-  **Regression**: Given a set of $(\mathbf{x}_i, y_i) \in \mathcal{X}\times\mathcal{Y} = \mathbb{R}^p \times \mathbb{R}$, for $i=1, ..., N$, we want to estimate for any new $\mathbf{x}$, a sample statistic such as $\mathbb{E}\left[ Y|X=\mathbf{x} \right]$. Informally we can say that regression aims at estimating numerical relationships among several variables.
+
+!!! Note
+    A **sample statistic** is any quantity computed from values in a sample that is used for a statistical purpose such as representing the sample.
+
+!!! Note
+    In general, **inference** is concerned with the conditional estimation
+    $P(Y=y|X=\mathbf{x})$ for any new $(\mathbf{x},y)$ and to this end it produces a function $f : \mathcal{X} \to \mathcal{Y}$ by using a **learning algorithm**.
+
+!!! Warning
+    In order to produce a good estimation for  any new $(\mathbf{x},y)$ we need to assume some hypothesis. 
+
+Consider a function $f : \mathcal{X} \to \mathcal{Y}$ produced by some learning algorithm. 
+
+The predictions of this function can be evaluated through a loss function
+$\ell : \mathcal{Y} \times  \mathcal{Y} \to \mathbb{R}$,
+such that $\ell(y, f(\mathbf{x})) \geq 0$ measures how close the prediction $f(\mathbf{x})$ from $y$ is. This function will encode our assumptions regarding what is a good inference function.
+
+!!! Note Regression Loss Function
+    The most simple loss function is the **squared error** loss function: $\ell(y,f(\mathbf{x})) = (y - f(\mathbf{x}))^2$.
+
+!!! Note Classification Loss Function
+    The most simple loss function is the **zero-one** loss function: $\ell(y,f(\mathbf{x})) = \mathbf{1}_{y \neq f(\mathbf{x})}$. 
+
+As we said before, there are two goals of learning: explanation and prediction. Using the loss function we can measure the quality of these goals. 
+
+Given traning datam, the **empirical risk** is:
+
+$$ R_{e} = \frac{1}{n} \sum_{i=1}^n \ell(y_i,f(\mathbf{x}_i)) $$
+
+It measures how well a model fits or explains training data. 
+
+The quality of prediction is more difficult to evaluate, but if test data (data that have not been used to build the model) is available, we can assume that the quality of the prediction is well approximated simply by average test error. This is called **prediction risk**:
+
+$$ R = \frac{1}{T} \sum_{t=1}^n \ell(y_t,f(\mathbf{x}_t)) $$
+
+The goal of learning is estimating a function $(\mathbf{x})$ providing small prediction risk. 
+
+### What about $f$?
+
+The process of estimating a predictive model involves three components:
++ Input samples $(\mathbf{x},y)$, including training and test data (generated from the same distribution). 
++ A system that generates an output $y$ for every input $\mathbf{x}$ according to some unknown conditional probability desity $p(y|\mathbf{x})$.
++ A predictive estimator, implemented by an algorithm that selects the best model from a given set of functions (or **admissible models**) $f(\mathbf{x}, \omega), \omega   \in \Omega$, where $\Omega$ is a set of parameters used to indedx the set of functions. This set of functions must be set *a priori*. 
+
+Let $\mathcal{F}$ denote the the set of all functions $f$ than can be produced by the chosen learning algorithm. This is the **hypotheses space**.
+
+The **capacity** of an hypothesis space induced by a learning algorithm intuitively represents the ability to find a good model $f \in \mathcal{F}$ for any function, regardless of its complexity.
+
+!!! Warning
+    The linear decision function $f(\mathbf{x},y) = \mbox{sign}((w \cdot \mathbf{x})+b)$ is the simplest model (in terms of capacity) we can use in binary classification. 
+
+In practice, capacity can be controlled through hyper-parameters of the learning algorithm. For example:
+
+- The degree of the family of polynomials;
+- The number of units and layers in a neural network;
+- Regularization terms.
+
+## Statistical Learning Theory
+
+**Statistical Learning Theory** states that our best option when learning from data is to look for a function $f \in \mathcal{F}$ with a small **expected risk** (or generalization error):
+
+$$R(f) = \mathbb{E}_{(\mathbf{x},y)\sim P(X,Y)} \left[ \ell(y, f(\mathbf{x})) \right]$$
+
+This means that given $P(X,Y)$ and $\mathcal{F}$, the optimal model is
+$f* = \operatorname{argmax}_{f \in \mathcal{F}} R(f)$.
+
+Unfortunately, since $P(X,Y)$ is unknown, the expected risk cannot be evaluated and the optimal model cannot be determined.
+
+However, if we have i.i.d. training data $\mathbf{D} = \{(\mathbf{x}_i, y_i) | i=1,\ldots,N \}$, we can
+compute an estimate, the empirical risk (or training error):
+
+$$\hat{R}(f, \mathbf{D}) = \frac{1}{N} \sum_{(\mathbf{x}_i, y_i) \in \mathbf{D}} \ell(y_i, f(\mathbf{x}_i))$$
+
+It can be shown that this estimate is <a onclick="document.getElementById('unbiased').style.display='block'" href="#myModal">unbiased</a> and can be used for finding a good enough approximation of $f^*$. This results into the empirical risk minimization principle:
+
+$$f^*_{\mathbf{D}} = \operatorname{argmin}_{f \in \mathcal{F}} \hat{R}(f, \mathbf{D})$$
+
+Under some mild assumptions, empirical risk minimizers converge:
+
+$$\lim_{N \to \infty} f^*_{\mathbf{D}} = f^* $$
+
+<!-- Modal -->
+
+<div id="unbiased" class="w3-modal">
+<div class="w3-modal-content">
+<div class="w3-container">
+<span onclick="document.getElementById('unbiased').style.display='none'" 
+      conclick=""document.getElementById('unbiased').style.display='block'"" 
+      class="w3-button w3-display-topright">&times;
+</span>
+
+## Unbiased estimators
+
+Unbiased means that the expected empirical risk estimate (over $D$) is the expected risk.
+
+</div>
+</div>
+</div>
+
+Most machine learning algorithms, including neural networks, implement empirical risk minimization.
+
+## Learning a model.
+
+Most of these algorithms are based on the *iterative solution* of a mathematical problem that involves data and model. If there was an analytical solution to the problem, this should be the adopted one, but this is not the case in general.
+
+So, the most common strategy for **learning from data** is based on solving a system of equations as a way to find a series of parameters of the model that minimizes a mathematical problem. This is called **optimization**.
+
+The most important technique for solving optimization problems is **gradient descend**.
+
+
+
+# Optimization
+
+## Preliminary: Nelder-Mead method for function minimization.
+
+The most simple thing we can try to minimize a function $f(x)$ would be to sample two points relatively near each other, and just repeatedly take a step down away from the largest value. This simple algorithm has a severe limitation: it can't get closer to the true minima than the step size.  
+
+The Nelder-Mead method dynamically adjusts the step size based off the loss of the new point. If the new point is better than any previously seen value, it **expands** the step size to accelerate towards the bottom. Likewise if the new point is worse it **contracts** the step size to converge around the minima. The usual settings are to half the step size when contracting and double the step size when expanding. 
+
+This method can be easily extended into higher dimensional examples, all that's required is taking one more point than there are dimensions. Then, the simplest approach is to replace the worst point with a point reflected through the centroid of the remaining n points. If this point is better than the best current point, then we can try stretching exponentially out along this line. On the other hand, if this new point isn't much better than the previous value, then we are stepping across a valley, so we shrink the step towards a better point.
+
+
+!!! Note Interactive: Nelder Mead Optimization Method
+    See ["An Interactive Tutorial on Numerical Optimization"](http://www.benfrederickson.com/numerical-optimization/)
+
+
+## Gradient descend: 1-D case.
+
+Let's suppose that we have a function $f: \mathbb{R} \rightarrow \mathbb{R}$. For example: 
+
+$$f(x) = x^2$$
+
+Our objective is to find the argument  $x$ that minimizes this function (for maximization, consider $-f(x)$). To this end, the critical concept is the **derivative**.
+
+The derivative of $f$ of a variable $x$, $f'(x)$ or $\frac{\mathrm{d}f}{\mathrm{d}x}$,  is a measure of the rate at which the value of the function changes with respect to the change of the variable. It is defined as the following limit:
+
+
+$$ f'(x) = \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} $$
+
+The derivative specifies how to scale a small change in the input in order to obtain the corresponding change in the output: 
+
+$$ f(x + h) \approx f(x) + h f'(x)$$
+
+The limit as $h$ approaches zero, if it exists, should represent the **slope of the tangent line** to $(x, f(x))$. 
+
+!!! Note Numerical derivatives
+    It can be shown that the “centered difference formula" is better when computing numerical derivatives:
+    $$ \lim_{h \rightarrow 0} \frac{f(x + h) - f(x - h)}{2h} $$
+    The error in the "finite difference" approximation can be derived from Taylor's theorem and, assuming that $f$ is differentiable, is $O(h)$. In the case of “centered difference" the error is $O(h^2)$.
+
+The derivative tells how to chage $x$ in order to make a small improvement in $f$. 
+Then, we can follow these steps to decrease the value of the function:
+
++ Start from a random $x$ value.
++ Compute the derivative $f'(x) = \lim_{h \rightarrow 0} \frac{f(x + h) - f(x - h)}{2h}$.
++ Walk a small step (possibly weighted by the derivative module) in the **opposite** direction of the derivative, because we know that $f(x - h \mbox{ sign}(f'(x))$ is less than $f(x)$ for  small enough $h$. 
+
+The search for the minima ends when the derivative is zero because we have no more information about which direction to move. $x$ is a **critical** o stationary point if $f'(x)=0$. 
+
+ + A **minimum (maximum)** is a critical point where $f(x)$ is lower (higher) than at all neighboring points. 
+ + There is a third class of critical points: **saddle points**.
+
+If $f$ is a **convex function**, this should be the minimum (maximum) of our functions. In other cases it could be a local minimum (maximum) or a saddle point.
+
+There are two problems with numerical derivatives:
++ It is approximate.
++ It is very slow to evaluate (two function evaluations: $f(x + h) , f(x - h)$ ).
+
+Our knowledge from Calculus could help!
+
+We know that we can get an **analytical expression** of the derivative for **some** functions. 
+
+For example, let's suppose we have a simple quadratic function, $f(x)=x^2−6x+5$, and we want to find the minimum of this function. 
+
+As a first approach, we can solve this analytically using Calculus, by finding the derivate $f'(x)  =  2x-6$ and setting it to zero:
+
+\begin{equation}
+\begin{split}
+2x-6  & = & 0 \\
+2x  & = & 6 \\
+x & = & 3 \\
+\end{split}
+\end{equation} 
+
+But you can also find the local minimum by using **gradient descend**: 
+
++ Start from a random $x$ value.
++ Compute the derivative $f'(x)$ analitically.
++ Walk a small step in the **opposite** direction of the derivative. 
+
+## From derivatives to gradient
+
+Let's consider a $n$-dimensional function $f: \mathbb{R}^n \rightarrow \mathbb{R}$. For example: 
+
+$$f(\mathbf{x}) = \sum_{n} x_n^2$$
+
+Our objective is to find the argument  $\mathbf{x}$ that minimizes this function.
+
+The **gradient** of $f$ is the vector whose components are the $n$ partial derivatives of $f$. It is thus a vector-valued function. 
+
+The gradient points in the direction of the greatest rate of **increase** of the function.
+
+$$\nabla {f} = (\frac{\partial f}{\partial x_1}, \dots, \frac{\partial f}{\partial x_n})$$
+
+Then, we can follow this steps to maximize (or minimize) the function:
+
++ Start from a random $\mathbf{x}$ vector.
++ Compute the gradient vector.
++ Walk a small step in the opposite direction of the gradient vector.
+
+!!! Note
+    It is important to be aware that this gradient computation is very expensive: if $\mathbf{x}$ has dimension $n$, we have to evaluate $f$ at $2*n$ points.
+
+
+### Alpha
+
+The step size, **alpha**, is a slippy concept: if it is too small we will slowly converge to the solution, if it is too large we can diverge from the solution. 
+
+There are several policies to follow when selecting the step size:
+
++ Constant size steps. In this case, the size step determines the precision of the solution.
++ Decreasing step sizes.
++ At each step, select the optimal step.
+
+The last policy is good, but too expensive. In this case we would consider a fixed set of values.
+
+!!! Note Exercise
+    Open this [Notebook](https://colab.research.google.com/notebooks/empty.ipynb) in Colab.
+
+# Learning from data
+
+In general, we have:
+
++ A dataset $(\mathbf{x},y)$ of $n$ examples. 
++ A target function $f_\mathbf{w}$, that we want to minimize, representing the **discrepancy between our data and the model** we want to fit. The model is represented by a set of parameters $\mathbf{w}$. 
++ The gradient of the target function, $g_f$. 
+
+
+In the most common case $f$ represents the errors from a data representation model $M$. To fit the model is to find the optimal parameters $\mathbf{w}$ that minimize the following expression:
+
+$$ f_\mathbf{w} = \frac{1}{n} \sum_{i} (y_i - M(\mathbf{x}_i,\mathbf{w}))^2 $$
+
+For example, $(\mathbf{x},y)$ can represent:
+
++ $\mathbf{x}$: the behavior of a "Candy Crush" player; $y$: monthly payments. 
++ $\mathbf{x}$: sensor data about your car engine; $y$: probability of engine error.
++ $\mathbf{x}$: finantial data of a bank customer; $y$: customer rating.
+
+
+Let's suppose that our model is a one-dimensional linear model $M(\mathbf{x},\mathbf{w}) = w \cdot x $. 
+
+## Gradient Descent
+
+### Stochastic Gradient Descend
+
+The last function evals the whole dataset $(\mathbf{x}_i,y_i)$ at every step. 
+
+If the dataset is large, this strategy is too costly. In this case we will use a strategy called **SGD** (*Stochastic Gradient Descend*).
+
+When learning from data, the cost function is additive: it is computed by adding sample reconstruction errors. 
+
+Then, we can compute the estimate the gradient (and move towards the minimum) by using only **one data sample** (or a small data sample).
+
+Thus, we will find the minimum by iterating this gradient estimation over the dataset.
+
+A full iteration over the dataset is called **epoch**. During an epoch, data must be used in a random order.
+
+If we apply this method we have some theoretical guarantees to find a good minimum:
++ SGD essentially uses the inaccurate gradient per iteration. Since there is no free food, what is the cost by using approximate gradient? The answer is that the convergence rate is slower than the gradient descent algorithm.
++ The convergence of SGD has been analyzed using the theories of convex minimization and of stochastic approximation: it converges almost surely to a global minimum when the objective function is convex or pseudoconvex, and otherwise converges almost surely to a local minimum.
+
+
+## Mini-batch Gradient Descent
+
+In code, general batch gradient descent looks something like this:
+
+```python
+nb_epochs = 100
+for i in range(nb_epochs):
+    grad = evaluate_gradient(target_f, data, w)
+    w = w - learning_rate * grad
+```
+
+For a pre-defined number of epochs, we first compute the gradient vector of the target function for the whole dataset w.r.t. our parameter vector. 
+
+**Stochastic gradient descent** (SGD) in contrast performs a parameter update for each training example and label:
+
+```python
+nb_epochs = 100
+for i in range(nb_epochs):
+    np.random.shuffle(data)
+    for sample in data:
+        grad = evaluate_gradient(target_f, sample, w)
+        w = w - learning_rate * grad
+```
+
+Mini-batch gradient descent finally takes the best of both worlds and performs an update for every mini-batch of $n$ training examples:
+
+```python
+nb_epochs = 100
+for i in range(nb_epochs):
+  np.random.shuffle(data)
+  for batch in get_batches(data, batch_size=50):
+    grad = evaluate_gradient(target_f, batch, w)
+    w = w - learning_rate * grad
+```
+
+Minibatch SGD has the advantage that it works with a slightly less noisy estimate of the gradient. However, as the minibatch size increases, the number of updates done per computation done decreases (eventually it becomes very inefficient, like batch gradient descent). 
+
+There is an optimal trade-off (in terms of computational efficiency) that may vary depending on the data distribution and the particulars of the class of function considered, as well as how computations are implemented.
+
+## Loss Funtions
+
+Loss functions $L(y, f(\mathbf{x})) = \frac{1}{n} \sum_i \ell(y_i, f(\mathbf{x_i}))$ represent the price paid for inaccuracy of predictions in classification/regression problems.
+
+In classification this function is often the **zero-one loss**, that is, $ \ell(y_i, f(\mathbf{x_i}))$ is zero when $y_i = f(\mathbf{x}_i)$ and one otherwise.
+
+This function is discontinuous with flat regions and is thus extremely hard to optimize using gradient-based methods. For this reason it is usual to consider a proxy to the loss called a *surrogate loss function*. For computational reasons this is usually convex function. Here we have some examples:
+
+### Square / Euclidean Loss
+
+In regression problems, the most common loss function is the square loss function:
+
+$$ L(y, f(\mathbf{x})) = \frac{1}{n} \sum_i (y_i - f(\mathbf{x}_i))^2  $$
+
+The square loss function can be re-written and utilized for classification:
+
+$$ L(y, f(\mathbf{x})) = \frac{1}{n} \sum_i (1 - y_i f(\mathbf{x}_i))^2  $$
+
+
+### Hinge / Margin Loss (i.e. Suport Vector Machines)
+
+The hinge loss function is defined as:
+
+$$ L(y, f(\mathbf{x})) = \frac{1}{n} \sum_i \mbox{max}(0, 1 - y_i f(\mathbf{x}_i))  $$
+
+The hinge loss provides a relatively tight, convex upper bound on the 0–1 Loss.
+
+
+![](https://github.com/DataScienceUB/DeepLearningMaster2019/blob/master/images/loss_functions.png?raw=1)
+
+
+### Logistic Loss (Logistic Regression)
+
+This function displays a similar convergence rate to the hinge loss function, and since it is continuous, simple gradient descent methods can be utilized. 
+
+$$ L(y, f(\mathbf{x})) = \frac{1}{n} log(1 + exp(-y_i f(\mathbf{x}_i))) $$
+
+
+### Sigmoid Cross-Entropy Loss (Softmax classifier)
+
+Cross-Entropy is a loss function that is very used for training **multiclass problems**. We'll focus on models that assume that classes are mutually exclusive. 
+
+In this case, our labels have this form $\mathbf{y}_i =(1.0,0.0,0.0)$. If our model predicts a different distribution, say  $ f(\mathbf{x}_i)=(0.4,0.1,0.5)$, then we'd like to nudge the parameters so that $f(\mathbf{x}_i)$ gets closer to $\mathbf{y}_i$.
+
+C.Shannon showed that if you want to send a series of messages composed of symbols from an alphabet with distribution $y$ ($y_j$  is the probability of the  $j$-th symbol), then to use the smallest number of bits on average, you should assign  $\log(\frac{1}{y_j})$  bits to the  $j$-th symbol. 
+
+The optimal number of bits is known as **entropy**:
+
+$$ H(\mathbf{y}) = \sum_j y_j \log\frac{1}{y_j} = - \sum_j y_j \log y_j$$
+
+**Cross entropy** is the number of bits we'll need if we encode symbols by using a wrong distribution $\hat y$:
+
+$$ H(y, \hat y) =   - \sum_j y_j \log \hat y_j $$ 
+
+In our case, the real distribution is $\mathbf{y}$ and the "wrong" one is $f(\mathbf{x}_i)$. So, minimizing **cross entropy** with respect our model parameters will result in the model that best approximates our labels if considered as a probabilistic distribution. 
+
+Cross entropy is used in combination with **Softmax** classifier. In order to classify $\mathbf{x}_i$ we could take the index corresponding to the max value of $f(\mathbf{x}_i)$, but Softmax gives a slightly more intuitive output (normalized class probabilities) and also has a probabilistic interpretation:
+
+$$ P(\mathbf{y}_i = j \mid \mathbf{x_i}) = - log \left( \frac{e^{f_j(\mathbf{x_i})}}{\sum_k e^{f_k(\mathbf{x_i})} } \right) $$
+
+where $f_k$ is a linear classifier. 
+
+## Advanced gradient descend
+
+
+### Momentum
+
+SGD has trouble navigating ravines, i.e. areas where the surface curves much more steeply in one dimension than in another, which are common around local optima. In these scenarios, SGD oscillates across the slopes of the ravine while only making hesitant progress along the bottom towards the local optimum.
+
+![](https://github.com/DataScienceUB/DeepLearningMaster2019/blob/master/images/ridge2.png?raw=1)
+
+Momentum is a method that helps accelerate SGD in the relevant direction and dampens oscillations. It does this by adding a fraction of the update vector of the past time step to the current update vector:
+
+$$ v_t = m v_{t-1} + \alpha \nabla_w f $$
+$$ w = w - v_t    $$
+
+The momentum $m$ is commonly set to $0.9$.
+
+### Nesterov
+
+However, a ball that rolls down a hill, blindly following the slope, is highly unsatisfactory. We'd like to have a smarter ball, a ball that has a notion of where it is going so that it knows to slow down before the hill slopes up again.
+
+Nesterov accelerated gradient (NAG) is a way to give our momentum term this kind of prescience. We know that we will use our momentum term $m v_{t-1}$ to move the parameters $w$. Computing 
+$w - m v_{t-1}$ thus gives us an approximation of the next position of the parameters (the gradient is missing for the full update), a rough idea where our parameters are going to be. We can now effectively look ahead by calculating the gradient not w.r.t. to our current parameters $w$ but w.r.t. the approximate future position of our parameters:
+
+$$ w_{new} = w - m v_{t-1} $$
+$$ v_t = m v_{t-1} + \alpha \nabla_{w_{new}} f $$
+$$ w = w - v_t $$
+
+### Adagrad
+
+All previous approaches manipulated the learning rate globally and equally for all parameters. Tuning the learning rates is an expensive process, so much work has gone into devising methods that can adaptively tune the learning rates, and even do so per parameter. 
+
+Adagrad is an algorithm for gradient-based optimization that does just this: It adapts the learning rate to the parameters, performing larger updates for infrequent and smaller updates for frequent parameters.
+
+$$ c = c + (\nabla_w f)^2 $$
+$$ w = w - \frac{\alpha}{\sqrt{c}} $$ 
+
+
+### RMProp
+
+RMSProp update adjusts the Adagrad method in a very simple way in an attempt to reduce its aggressive, monotonically decreasing learning rate. In particular, it uses a moving average of squared gradients instead, giving:
+
+$$ c = \beta c + (1 - \beta)(\nabla_w f)^2 $$
+$$ w = w - \frac{\alpha}{\sqrt{c}} $$ 
+
+where $\beta$ is a decay rate that controls the size of the moving average.
+
+
+<img src="https://github.com/DataScienceUB/DeepLearningMaster2019/blob/master/images/g1.gif?raw=1">
+
+(Image credit: Alec Radford) 
+
+<img src="https://github.com/DataScienceUB/DeepLearningMaster2019/blob/master/images/g2.gif?raw=1">
+
+(Image credit: Alec Radford) 
+
+
+
+
+
+
+# References
+
+Vapnik, V. (1992). Principles of risk minimization for learning theory. In Advances in neural information processing systems (pp. 831-838).
+
+
+<br>
+<div class="center">
+<p style="text-align:left;">
+     [<i class="material-icons">fast_rewind</i> Previous Page](deep0.html)
+    <span style="float:right;">
+        [Next Page <i class="material-icons">fast_forward</i>](deep2.html)  
+    </span>
+</p>
+</div>
+
+
+
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script> 
+
+<!-- Markdeep: 
+
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script> -->
+
+<script src="markdeep.min.js?" charset="utf-8"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+
+<script type="text/javascript">
+// Setup MathJax
+      MathJax.Hub.Config({
+          tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+      });
+
+      MathJax.Hub.Configured();
+</script>

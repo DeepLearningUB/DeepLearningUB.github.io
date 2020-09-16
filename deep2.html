@@ -1,0 +1,201 @@
+<meta charset="utf-8" emacsmode="-*- markdown -*-">
+<link rel="stylesheet" href="apiDSBCN.css">
+<link rel="stylesheet" href="apidoc.css?">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<link href='https://fonts.googleapis.com/css?family=Carrois Gothic SC' rel='stylesheet'>
+
+
+
+<center> 
+<p style="font-size:12px; font-family: 'Carrois Gothic SC'; color:grey"; line-height: 1.0rem>
+<b> Deep Learning Course v2.0 </b><br>
+Master in Fundamental Principles of Data Science <br>
+Jordi Vitrià, Universitat de Barcelona, 2020 <br>
+</p>
+</center>
+
+<div class="center">
+<p style="text-align:left;">
+     [<i class="material-icons">fast_rewind</i> Previous Page](deep1.html)
+    <span style="float:right;">
+        [Next Page <i class="material-icons">fast_forward</i>](deep3.html)  
+    </span>
+</p>
+</div>
+
+
+
+
+# How to learn DL models?
+
+The **backpropagation** algorithm was originally introduced in the 1970s, but its importance wasn't fully appreciated until a famous 1986 paper by David Rumelhart, Geoffrey Hinton, and Ronald Williams.
+
+!!! Note
+    **Backpropagation** is the key algorithm that makes training deep models computationally tractable. For modern neural networks, it can make training with gradient descent as much as ten million times faster, relative to a naive implementation. That’s the difference between a model taking a week to train and taking 200,000 years. (Credit: Christopher Olah, 2016)
+
+We have seen that in order to optimize our models we need to compute the derivative of the loss function with respect to all model paramaters. For example, given:
+
+$$ L(y, f_{\mathbf w}(\mathbf{x})) = \frac{1}{n} \sum_i (y_i - f_{\mathbf w}(\mathbf{x}_i))^2  $$
+
+where ${\mathbf w} = (w_1, w_2, \dots, w_m)$, we need to compute:
+
+$$
+\frac{\delta L}{\delta w_i}
+$$
+
+The computation of derivatives in computer models is addressed by four main methods: 
+
++ Manually working out derivatives and coding the result (as in the original paper describing backpropagation); 
+
+![Original backpropagation algorithm](https://github.com/DataScienceUB/DeepLearningMaster2019/blob/master/images/back.png?raw=1)
+
+
++ Numerical differentiation (using finite difference approximations); 
++ Symbolic differentiation (using expression manipulation in software, such as Sympy); 
++ and Automatic differentiation (AD).
+
+## Automatic differentiation
+
+**Automatic differentiation** (AD) works by systematically applying the **chain rule** of differential calculus at the elementary operator level.
+
+Let $ y = f(g(x)) $ our target function. In its basic form, the chain rule states:
+
+$$ \frac{\partial f}{\partial x} = \frac{\partial f}{\partial g} \frac{\partial g}{\partial x} $$
+
+or, if there are more than one variable $g_i$ in-between $y$ and $x$ (f.e. if $f$ is a two dimensional function such as $f(g_1(x), g_2(x))$), then:
+
+$$ \frac{\partial f}{\partial x} = \sum_i \frac{\partial f}{\partial g_i} \frac{\partial g_i}{\partial x} $$
+
+!!! Note
+    See https://www.math.hmc.edu/calculus/tutorials/multichainrule/
+
+Now, **let's see how AD allows the accurate evaluation of derivatives at machine precision**, with only a small constant factor of overhead.
+
+In its most basic description, AD relies on the fact that all numerical computations
+are ultimately compositions of a finite set of elementary operations for which derivatives are known.
+
+For example, let's consider the computation of the derivative of this function, that represents a 1-layer neural network model:
+
+$$
+    f(x) = \frac{1}{1 + e^{- ({w}^T \cdot  x + b)}} 
+$$
+
+First, let's write how to evaluate  𝑓(𝑥)  via a sequence of primitive operations:
+
+```
+x = ?  # This is an arbitrary point
+f1 = w * x
+f2 = f1 + b
+f3 = -f2
+f4 = 2.718281828459 ** f3
+f5 = 1.0 + f4
+f = 1.0/f5
+```
+
+The question mark indicates that  𝑥  is a value that must be provided.
+
+This program can compute the value of  𝑓(𝑥)  and also populate program variables.
+
+By using this sequence, we can evaluate  ∂𝑓∂𝑥  at any  𝑥  by using the chain rule. This is called forward-mode differentiation.
+
+It is interesting to note that this *program* can be automatically derived  if we have access to **subroutines implementing the derivatives of primitive functions** (such as $\exp{(x)}$ or $1/x$) and all intermediate variables are computed in the right order. 
+
+It is also interesting to note that AD allows the accurate evaluation of derivatives at **machine precision**, with only a small constant factor of overhead.
+
+Forward differentiation is efficient for functions $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ with $n << m$ (only $O(n)$ sweeps are necessary).  This is not the case of neural networks!
+
+For cases $n >> m$ a different technique is needed. To this end, we will rewrite the chain rule as:
+
+$$
+\frac{\partial f}{\partial x} = \frac{\partial g}{\partial x} \frac{\partial f}{\partial g}
+$$
+
+to propagate derivatives backward from a given output. This is called *reverse-mode differentiation*. Reverse pass starts at the end (i.e. $\frac{\partial f}{\partial f} = 1$) and propagates backward to all dependencies.
+
+
+In practice, reverse-mode differentiation is a two-stage process. In the first stage the original function code is run forward, populating $f_i$ variables. In the second stage, derivatives are calculated by propagating in reverse, from the outputs to the inputs.
+
+The most important property of reverse-mode differentiation is that it is **cheaper than forward-mode differentiation for functions with a high number of input variables**. In our case, $f : \mathbb{R}^n \rightarrow \mathbb{R}$, only one application of the reverse mode is sufficient to compute the full gradient of the function $\nabla f = \big( \frac{\partial y}{\partial x_1}, \dots ,\frac{\partial y}{\partial x_n} \big)$. This is the case of deep learning, where the number of input variables is very high. 
+
+!!! Note
+    As we have seen, AD relies on the fact that all numerical computations are ultimately compositions of a finite set of elementary operations for which derivatives are known. 
+
+!!! Note
+    For this reason, given a library of derivatives of all elementary functions in a deep neural network, we are able of computing the derivatives of the network with respect to all parameters at machine precision and applying stochastic gradient methods to its training. Without this automation process the design and debugging of optimization processes for complex neural networks with millions of parameters would be impossible. 
+
+## Autograd
+
+Autograd is a Python module (with only one function) that implements automatic differentiation.
+
+Autograd can automatically differentiate Python and Numpy code:
+
++ It can handle most of Python’s features, including loops, if statements, recursion and closures.
++ Autograd allows you to compute gradients of many types of data structures (Any nested combination of lists, tuples, arrays, or dicts).
++ It can also compute higher-order derivatives.
++ Uses reverse-mode differentiation (backpropagation) so it can efficiently take gradients of scalar-valued functions with respect to array-valued or vector-valued arguments.
++ You can easily implement your custim gradients (good for speed, numerical stability, non-compliant code, etc).
+
+## Deep Learning tricks
+
+
+!!! Note
+    A naïve description of the basic setup in deep learning would be: *a many-layers-deep network of linear layers, linear convolutions and occasionally recurrent structures with nonlinear activation functions that is trained by computing the gradient of the training error through reverse mode AD.*.
+
+AD is a critical component when developing deep models because the use of SGD is much more easy and robust (f.e. derivative computation is free of bugs!), but in spite of this fact optimization of deep models is not yet an easy task. Gradient-based optimization still suffers from some problems:
++ The system can be **poorly conditioned** (changing one parameter requires precise compensatory changes to other parameters to avoid large increases in the optimization criterion). 
++ Simply calculating the actual gradient is so **slow** in deep learning systems that it is impractical to use the true gradient for purposes of optimization.
+
+In order to address each issues, deep learning community has developed some **tricks**. First, **gradient tricks**, namely methods to make the gradient either easier to calculate or to give it more desirable properties. And second, **optimization tricks**, namely new methods related to stochastic optimization.
+
+The deep learning community has been developing many methods to make gradient descent work with deep architectures. These methods (related to model architectures and gradient calculation) are  numerous. Here we discuss only a small sample of methods.
+
++ It is not really feasible to calculate the true gradient when there is a large dataset.  Instead a sample is used. Calculating the gradient of the error of just a random sample from the dataset (or sequential windows, assuming the dataset has been randomly shuffled) is much faster.
++ In calculating the stochastic gradient, it is tempting to do the minimal amount of computation necessary to obtain an unbiased estimate, which would involve a single sample from the training set. In practice it has proven much better to use a block of contiguous samples, on the order of dozens.  This has two advantages: the first is less noise, and the second is that data-parallelism can be used.
++ In a multi-layered structure, one would expect the gradients of quantities at early layers to be nearly zero (assuming the gains at intermediate levels are below unity) or to be enormous (assuming the gains are above unity). The tricks are:
+    + Rectified linear units instead of sigmoids. Classic multi-layer perceptrons use the sigmoid activation function, but this has a derivative which goes to zero when its input is too strong.  That means that when a unit in the network receives a very strong signal, it becomes difficult to change. Using a rectified linear unit (ReLU) function, overcomes this problem, making the system more plastic even when strong signals are present.
+    + Gradient clipping. In the domain of deep learning, there are often outliers in the training set: exemplars that are being classified incorrectly, for example, or improper images in a visual classification task, or mislabeled examples, and the like. These can cause a large gradient inside a single mini-batch, which washes out the more appropriate signals. For this reason a technique called gradient clipping is often used, in which components of the gradient exceeding a threshold (in absolute value) are pushed down to that threshold.
++ Keeping the error surface well conditioned for gradient optimization has been one of the keys to the current widespread deployment of deep learning.
+    + Dropout. Imagine a network in which multiple units together represent some important feature, requiring a precise weighting of their values in downstream processing. This would make optimization quite difficult, as it sets up couplings between parameters which must be maintained. A technique to avoid such “unfortunate collusions” is dropout, in which each unit in the network is, on each training pattern pass, randomly “dropped out” with some probability (typically 50%) by holding its value at zero. This encourages detected features to be independently meaningful. (In “production mode” dropout is turned off, and the weights scaled to compensate, to minimize the noise when performance matters.)
+    + Batch normalization. Batch Normalization is a technique to provide any layer in a neural network with inputs that are zero mean/unit variance. 
+    + Careful initialization. Considering how the variances of activation values and gradients can be maintained between the layers in a network leads to intelligent normalized initialization schemes, which enable substantially faster optimization convergence. 
++ Early stopping. When fitting a dynamic system to data, as exact a match as possible is desired, so the true optimum is sought. This is not the case in machine learning, where the optimization is of error on a training set, while the primary concern is generally not performance on the training set, but on as-yet-unseen new data. There is often a tradeoff between the two, encountered after optimization has proceeded for a significant amount of time. This is addressed by early stopping, in which an estimate of performance on unseen data is maintained, and optimization is halted early when this estimated generalization performance stops improving, even if performance on the training set is continuing to improve. 
+
+## Playing with neural nets.
+
+http://playground.tensorflow.org
+
+<br>
+<div class="center">
+<p style="text-align:left;">
+     [<i class="material-icons">fast_rewind</i> Previous Page](deep1.html)
+    <span style="float:right;">
+        [Next Page <i class="material-icons">fast_forward</i>](deep3.html)  
+    </span>
+</p>
+</div>
+
+
+
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script> 
+
+<!-- Markdeep: 
+
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script> -->
+
+<script src="markdeep.min.js?" charset="utf-8"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+
+<script type="text/javascript">
+// Setup MathJax
+      MathJax.Hub.Config({
+          tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+      });
+
+      MathJax.Hub.Configured();
+</script>

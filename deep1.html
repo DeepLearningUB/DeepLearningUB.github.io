@@ -31,12 +31,6 @@ Jordi Vitrià, Universitat de Barcelona, 2020 <br>
 </div>
 
 
-!!! Note Exercise
-    Open this [Notebook](https://colab.research.google.com/notebooks/empty.ipynb) in Colab.
-
-!!! Note Exercise
-    Open this [Notebook](https://colab.research.google.com/github/DeepLearningUB/DeepLearningUB.github.io/blob/master/deep1.ipynb) in Colab.
-
 # Learning: Basic Concepts
 
 We are living in an increasingly data-rich world. These data is useful if we can extract from them insights/knowledge that are useful for humans. The first step is to transform data into information, but we will terms in an interchangeble way. 
@@ -326,11 +320,12 @@ $$f(\mathbf{x}) = \sum_{n} x_n^2$$
 
 Our objective is to find the argument  $\mathbf{x}$ that minimizes this function.
 
-The **gradient** of $f$ is the vector whose components are the $n$ partial derivatives of $f$. It is thus a vector-valued function. 
-
-The gradient points in the direction of the greatest rate of **increase** of the function.
+The **gradient** of $f$, $\nabla {f}$, is the vector whose components are the $n$ partial derivatives of $f$. It is thus a vector-valued function. 
 
 $$\nabla {f} = (\frac{\partial f}{\partial x_1}, \dots, \frac{\partial f}{\partial x_n})$$
+
+
+The gradient points in the direction of the greatest rate of **increase** of the function.
 
 Then, we can follow this steps to maximize (or minimize) the function:
 
@@ -339,12 +334,45 @@ Then, we can follow this steps to maximize (or minimize) the function:
 + Walk a small step in the opposite direction of the gradient vector.
 
 !!! Note
-    It is important to be aware that this gradient computation is very expensive: if $\mathbf{x}$ has dimension $n$, we have to evaluate $f$ at $2*n$ points.
+    It is important to be aware that this gradient computation is very expensive: if $\mathbf{x}$ has dimension $n$, we have to evaluate $f$ at $2*n$ points (2 for every dimension).
 
+Implementation in Python:
 
-### Alpha
+```python
+def fin_dif_partial_centered(x, 
+                             f, 
+                             i, 
+                             h=1e-6):
+    '''
+    This method returns the partial derivative of the i-th component of f at x
+    by using the centered finite difference method
+    '''
+    w1 = [x_j + (h if j==i else 0) for j, x_j in enumerate(x)]
+    w2 = [x_j - (h if j==i else 0) for j, x_j in enumerate(x)]
+    return (f(w1) - f(w2))/(2*h)
 
-The step size, **alpha**, is a slippy concept: if it is too small we will slowly converge to the solution, if it is too large we can diverge from the solution. 
+def gradient_centered(x, 
+                      f, 
+                      h=1e-6):
+    '''
+    This method returns the gradient vector of f at x
+    by using the centered finite difference method
+    '''
+    return[round(fin_dif_partial_centered(x,f,i,h), 10) for i,_ in enumerate(x)]
+
+def f(x):
+    return sum(x_i**2 for x_i in x)
+
+x = [1.0,1.0,1.0]
+gradient_centered(x,f)
+
+>>> 3.000000 [2.0000000001, 2.0000000001, 2.0000000001]
+
+```
+
+### Step size
+
+The step size, **alpha** or $h$, is a slippy concept: if it is too small we will slowly converge to the solution, if it is too large we can diverge from the solution. 
 
 There are several policies to follow when selecting the step size:
 
@@ -361,14 +389,14 @@ The last policy is good, but too expensive. In this case we would consider a fix
 
 In general, we have:
 
-+ A dataset $(\mathbf{x},y)$ of $n$ examples. 
-+ A target function $f_\mathbf{w}$, that we want to minimize, representing the **discrepancy between our data and the model** we want to fit. The model is represented by a set of parameters $\mathbf{w}$. 
++ A dataset $(\mathbf{x},y)$ of $N$ examples. 
++ A target function $f_\mathbf{w}$, that we want to minimize, representing the **discrepancy between our data and the model** we want to fit. The model is indexed by a set of parameters $\mathbf{w}$. 
 + The gradient of the target function, $g_f$. 
 
 
 In the most common case $f$ represents the errors from a data representation model $M$. To fit the model is to find the optimal parameters $\mathbf{w}$ that minimize the following expression:
 
-$$ f_\mathbf{w} = \frac{1}{n} \sum_{i} (y_i - M(\mathbf{x}_i,\mathbf{w}))^2 $$
+$$ \frac{1}{N} \sum_{i} (y_i - f(\mathbf{x}_i,\mathbf{w}))^2 $$
 
 For example, $(\mathbf{x},y)$ can represent:
 
@@ -377,32 +405,119 @@ For example, $(\mathbf{x},y)$ can represent:
 + $\mathbf{x}$: finantial data of a bank customer; $y$: customer rating.
 
 
-Let's suppose that our model is a one-dimensional linear model $M(\mathbf{x},\mathbf{w}) = w \cdot x $. 
+Let's suppose that our model is a one-dimensional linear model $f(\mathbf{x},\mathbf{w}) = w \cdot x$. 
 
-## Gradient Descent
+## (Batch) Gradient Descent
+
+We can implement **gradient descend** in the following way (*batch gradient descend*):
+
+```python
+import numpy as np
+import random
+
+# f = 2x
+x = np.arange(10)
+y = np.array([2*i for i in x])
+
+# f_target = 1/n Sum (y - wx)**2
+def target_f(x,y,w):
+    return np.sum((y - x * w)**2.0) / x.size
+
+# gradient_f = 2/n Sum 2wx**2 - 2xy
+def gradient_f(x,y,w):
+    return 2 * np.sum(2*w*(x**2) - 2*x*y) / x.size
+
+def step(w,grad,alpha):
+    return w - alpha * grad
+
+def BGD(target_f, 
+        gradient_f, 
+        x, 
+        y, 
+        toler = 1e-6, 
+        alpha=0.01):
+    '''
+    Batch gradient descend by using a given step
+    '''
+    w = random.random()
+    val = target_f(x,y,w)
+    i = 0
+    while True:
+        i += 1
+        gradient = gradient_f(x,y,w)
+        next_w = step(w, gradient, alpha)
+        next_val = target_f(x,y,next_w)    
+        if (abs(val - next_val) < toler):
+            return w
+        else:
+            w, val = next_w, next_val
+
+BGD(target_f, gradient_f, x, y)
+>>> 2.000093
+```
+
+We can also implement the multi-step version:
+
+```python
+def BGD_multi_step(target_f, 
+                   gradient_f, 
+                   x, 
+                   y, 
+                   toler = 1e-6):
+    '''
+    Batch gradient descend by using a multi-step approach
+    '''
+    alphas = [100, 10, 1, 0.1, 0.001, 0.00001]
+    w = random.random()
+    val = target_f(x,y,w)
+    i = 0
+    while True:
+        i += 1
+        gradient = gradient_f(x,y,w)
+        next_ws = [step(w, gradient, alpha) for alpha in alphas]
+        next_vals = [target_f(x,y,w) for w in next_ws]
+        min_val = min(next_vals)
+        next_w = next_ws[next_vals.index(min_val)]   
+        next_val = target_f(x,y,next_w)    
+        if (abs(val - next_val) < toler):
+            return w
+        else:
+            w, val = next_w, next_val
+
+BGD_multi_step(target_f, gradient_f, x, y)
+>>> 1.999616
+```
+
+It is called (batch) gradient descend because at every step, when computing 
+
+```python
+next_val = target_f(x,y,next_w)
+```
+
+we are using the whole dataset!
 
 ### Stochastic Gradient Descend
 
-The last function evals the whole dataset $(\mathbf{x}_i,y_i)$ at every step. 
+The last function evals the whole dataset $(\mathbf{x}_i,y_i)$ at every step.  If the dataset is large, this strategy is too costly. In this case we will use a strategy called **SGD** (*Stochastic Gradient Descend*).
 
-If the dataset is large, this strategy is too costly. In this case we will use a strategy called **SGD** (*Stochastic Gradient Descend*).
-
-When learning from data, the cost function is additive: it is computed by adding sample reconstruction errors. 
-
-Then, we can compute the estimate the gradient (and move towards the minimum) by using only **one data sample** (or a small data sample).
+When learning from data, the cost function is additive: it is computed by adding sample reconstruction errors. **In this case**, it can be shown that we can compute a good estimate of the gradient (and move towards the minimum) by using only **one data sample** (or a small data sample).
 
 Thus, we will find the minimum by iterating this gradient estimation over the dataset.
-
-A full iteration over the dataset is called **epoch**. During an epoch, data must be used in a random order.
 
 If we apply this method we have some theoretical guarantees to find a good minimum:
 + SGD essentially uses the inaccurate gradient per iteration. Since there is no free food, what is the cost by using approximate gradient? The answer is that the convergence rate is slower than the gradient descent algorithm.
 + The convergence of SGD has been analyzed using the theories of convex minimization and of stochastic approximation: it converges almost surely to a global minimum when the objective function is convex or pseudoconvex, and otherwise converges almost surely to a local minimum.
 
+!!! Note Definition
+    A full iteration over the dataset is called **epoch**. 
+
+!!! Warning
+    In order to fullfill the guarantees of SGD, at every epoch, data must be processed in a random order.
+
 
 ## Mini-batch Gradient Descent
 
-In code, general batch gradient descent looks something like this:
+In general, batch gradient descent looks something like this:
 
 ```python
 nb_epochs = 100
@@ -424,7 +539,7 @@ for i in range(nb_epochs):
         w = w - learning_rate * grad
 ```
 
-Mini-batch gradient descent finally takes the best of both worlds and performs an update for every mini-batch of $n$ training examples:
+**Mini-batch gradient** descent finally takes the best of both worlds and performs an update for every mini-batch of $n$ training examples:
 
 ```python
 nb_epochs = 100
@@ -443,9 +558,7 @@ There is an optimal trade-off (in terms of computational efficiency) that may va
 
 Loss functions $L(y, f(\mathbf{x})) = \frac{1}{n} \sum_i \ell(y_i, f(\mathbf{x_i}))$ represent the price paid for inaccuracy of predictions in classification/regression problems.
 
-In classification this function is often the **zero-one loss**, that is, $ \ell(y_i, f(\mathbf{x_i}))$ is zero when $y_i = f(\mathbf{x}_i)$ and one otherwise.
-
-This function is discontinuous with flat regions and is thus extremely hard to optimize using gradient-based methods. For this reason it is usual to consider a proxy to the loss called a *surrogate loss function*. For computational reasons this is usually convex function. Here we have some examples:
+In classification this function is often the **zero-one loss**, that is, $\ell(y_i, f(\mathbf{x_i}))$ is $0$ when $y_i = f(\mathbf{x}_i)$ and $1$ otherwise. This function is discontinuous with flat regions and is thus extremely hard to optimize using gradient-based methods. For this reason it is usual to consider a proxy to the loss called a *surrogate loss function*. For computational reasons this is usually convex function. Here we have some examples:
 
 ### Square / Euclidean Loss
 

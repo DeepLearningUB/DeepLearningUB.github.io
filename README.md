@@ -10,7 +10,7 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 
 ### Class Time and Location
 + First Semester (September, 2020 - January, 2021)
-+ Face-to-face Lectures: Thursday 16:00h-17:00h
++ Face-to-face Lectures: Thursday 15:00h-16:00h
 + Location: Aula T1, Facultat de Matemàtiques i Informàtica, Universitat de Barcelona. 
 
 ### Sessions

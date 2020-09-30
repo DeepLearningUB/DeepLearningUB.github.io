@@ -14,7 +14,7 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 + Location: Aula T1, Facultat de Matemàtiques i Informàtica, Universitat de Barcelona. 
 
 ### Sessions
-+ [Introduction](https://deeplearningub.github.io/deep0)
++ [Introduction](https://deeplearningub.github.io/deep0) | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DeepLearningMasterIntro.pdf)
 + [Session 1](https://deeplearningub.github.io/deep1)
 + [Session 2](https://deeplearningub.github.io/deep2)
 + [Session 3](https://deeplearningub.github.io/deep3)

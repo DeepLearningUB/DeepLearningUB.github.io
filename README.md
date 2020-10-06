@@ -15,6 +15,7 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 
 ### Sessions
 + [Introduction](https://deeplearningub.github.io/deep0) | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DeepLearningMasterIntro.pdf)
++ McKinsey DataLab (15/10/20, 2:00 to 4:00 p.m.)
 + [Session 1](https://deeplearningub.github.io/deep1)
 + [Session 2](https://deeplearningub.github.io/deep2)
 + [Session 3](https://deeplearningub.github.io/deep3)

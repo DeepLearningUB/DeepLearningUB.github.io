@@ -13,7 +13,7 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 + Face-to-face Lectures: Thursday 15:00h-16:00h
 + Location: Aula T1, Facultat de Matemàtiques i Informàtica, Universitat de Barcelona. 
 
-### Sessions
+### Syllabus
 + [Introduction](https://deeplearningub.github.io/deep0) | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DeepLearningMasterIntro.pdf)
 + McKinsey DataLab (15/10/20, 2:00 to 4:00 p.m.)
 + [Basic Concepts: Machine Learning and Optimization ](https://deeplearningub.github.io/deep1) | Slides
@@ -25,3 +25,6 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 + [Session 7](https://deeplearningub.github.io/deep7)
 + [Session 8](https://deeplearningub.github.io/deep8)
 + [Session 9](https://deeplearningub.github.io/deep9)
+
+### Assignment
++ 1st assignment: Designing and training a neural network from scratch: [notebook](https://raw.githubusercontent.com/DeepLearningUB/DeepLearningUB.github.io/master/1st_Assignment.ipynb). Due data: 30/10.

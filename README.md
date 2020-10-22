@@ -18,13 +18,9 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 + McKinsey DataLab (15/10/20, 2:00 to 4:00 p.m.)
 + [Basic Concepts: Machine Learning and Optimization ](https://deeplearningub.github.io/deep1) | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL1.pdf)
 + [SGD and Automatic Differentiation](https://deeplearningub.github.io/deep2) | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL2.pdf)
-+ [Tensorflow and Keras](https://deeplearningub.github.io/deep3) | Slides
-+ [Convolutional Neural Networks](https://deeplearningub.github.io/deep4) | Slides
-+ [Session 5](https://deeplearningub.github.io/deep5)
-+ [Session 6](https://deeplearningub.github.io/deep6)
-+ [Session 7](https://deeplearningub.github.io/deep7)
-+ [Session 8](https://deeplearningub.github.io/deep8)
-+ [Session 9](https://deeplearningub.github.io/deep9)
++ [Tensorflow and Keras] | Slides
++ [Convolutional Neural Networks] | Slides
+
 
 ### Assignment
 + 1st assignment: Designing and training a neural network from scratch: [notebook](https://colab.research.google.com/drive/1Q1AJRv19RO_3hK-eMTRRWn4GxYf2VR2M). **Due data: 30/10**.

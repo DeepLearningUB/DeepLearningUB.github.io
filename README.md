@@ -29,4 +29,4 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 ### Assignment
 + 1st assignment: Designing and training a neural network from scratch: [notebook](https://raw.githubusercontent.com/DeepLearningUB/DeepLearningUB.github.io/master/1st_Assignment.ipynb). Due data: 30/10.
 
-https://colab.research.google.com/github/DeepLearningUB/DeepLearningUB.github.io/master/1st_Assignment.ipynb
+https://colab.research.google.com/github/DeepLearningUB/DeepLearningUB.github.io/1st_Assignment.ipynb

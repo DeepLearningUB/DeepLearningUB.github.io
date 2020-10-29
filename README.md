@@ -18,7 +18,7 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 + McKinsey DataLab (15/10/20, 2:00 to 4:00 p.m.)
 + [Basic Concepts: Machine Learning and Optimization ](https://deeplearningub.github.io/deep1) | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL1.pdf)
 + [SGD and Automatic Differentiation](https://deeplearningub.github.io/deep2) | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL2.pdf)
-+ [Tensorflow and Keras] | Slides
++ Tensorflow and Keras | [Notebook](https://colab.research.google.com/drive/1kI69bO3eLiXHtt3bkoEMk7FGMhUFO6Wu?usp=sharing)
 + [Convolutional Neural Networks] | Slides
 
 

@@ -20,6 +20,7 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 + [SGD and Automatic Differentiation](https://deeplearningub.github.io/deep2) | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL2.pdf)
 + Tensorflow and Keras | [Notebook](https://colab.research.google.com/drive/1kI69bO3eLiXHtt3bkoEMk7FGMhUFO6Wu?usp=sharing)
 + Convolutional Neural Networks | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL3.pdf)  |  [Notebook1](https://colab.research.google.com/drive/1nBzG3YYZpNCqlSmxta1Uhc7XdbYnZQwk?usp=sharing) | [Notebook2](https://colab.research.google.com/drive/1rquH7QlIWk4SvgA3U2RLYN8i1jNJkHMO?usp=sharing)
++ Contrastive & Self-Supervised Learning | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL4.pdf) | [Notebook2](https://colab.research.google.com/drive/16jjlXRO4yfJ94YiichMNBRtIr8BsLucr?usp=sharing)
 
 
 ### Assignment

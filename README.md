@@ -23,7 +23,7 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 + Contrastive & Self-Supervised Learning | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL4.pdf) | [Notebook](https://colab.research.google.com/drive/16jjlXRO4yfJ94YiichMNBRtIr8BsLucr?usp=sharing)
 + Deep Sequential Models | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL5.pdf) | [Notebook](https://colab.research.google.com/drive/196q3LK7RiyQ9LDYD2KN6_zcko5RyOkRK?usp=sharing)
 + Words and Symbols (embeddings).
-+ Advanced Deep Sequential Models.
++ Advanced & Modern Deep Sequential Models.
 + Non Supervised Learning.
 
 ### Assignment

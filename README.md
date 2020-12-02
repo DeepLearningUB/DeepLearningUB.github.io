@@ -30,5 +30,5 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 + 1st assignment: Designing and training a neural network from scratch: [notebook](
 https://colab.research.google.com/github/DeepLearningUB/DeepLearningUB.github.io/blob/master/1st_Assignment.ipynb). **Due data: 30/10**.
 + 2ond assignment: Facial Point Detection with CNN: [notebook](https://colab.research.google.com/drive/1vhKfLBKIrcVwvUvRDl7YZy8BQIZU88y2?usp=sharing). **Due data: 30/11**.
-+ 3rd assignment: Colors and Words. [notebook](https://colab.research.google.com/drive/13GU1rOjy3Jl89ZqaEGg5Zfo01ezoyt08?usp=sharing). **Due data: 15/01**.
++ 3rd assignment: Colors and Words: [notebook](https://colab.research.google.com/drive/13GU1rOjy3Jl89ZqaEGg5Zfo01ezoyt08?usp=sharing). **Due data: 15/01**.
 

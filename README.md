@@ -22,8 +22,8 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 + Convolutional Neural Networks | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL3.pdf)  |  [Notebook1](https://colab.research.google.com/drive/1nBzG3YYZpNCqlSmxta1Uhc7XdbYnZQwk?usp=sharing) | [Notebook2](https://colab.research.google.com/drive/1rquH7QlIWk4SvgA3U2RLYN8i1jNJkHMO?usp=sharing)
 + Contrastive & Self-Supervised Learning | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL4.pdf) | [Notebook](https://colab.research.google.com/drive/16jjlXRO4yfJ94YiichMNBRtIr8BsLucr?usp=sharing)
 + Deep Sequential Models | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL5.pdf) | [Notebook](https://colab.research.google.com/drive/196q3LK7RiyQ9LDYD2KN6_zcko5RyOkRK?usp=sharing)
-+ Deep Representations of Words. [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL6.pdf) | [Notebook1](https://colab.research.google.com/drive/13mG65NNvyqW5PVNLKAzMmGgpuWF8wmkC?usp=sharing) | [Notebook2](https://colab.research.google.com/drive/1YvQqxYfnukqBOAIB7ZDmg__gRv44cYMV?usp=sharing) 
-+ Attention and Context-based Embeddings. [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL7.pdf)
++ Deep Representations of Words | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL6.pdf) | [Notebook1](https://colab.research.google.com/drive/13mG65NNvyqW5PVNLKAzMmGgpuWF8wmkC?usp=sharing) | [Notebook2](https://colab.research.google.com/drive/1YvQqxYfnukqBOAIB7ZDmg__gRv44cYMV?usp=sharing) 
++ Attention and Context-based Embeddings | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL7.pdf)
 + Non Supervised Learning.
 
 ### Assignment

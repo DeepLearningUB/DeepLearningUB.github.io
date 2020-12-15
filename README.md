@@ -24,7 +24,7 @@ Deep learning is one of the fastest growing areas of machine learning and a hot 
 + Deep Sequential Models | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL5.pdf) | [Notebook](https://colab.research.google.com/drive/196q3LK7RiyQ9LDYD2KN6_zcko5RyOkRK?usp=sharing)
 + Deep Representations of Words | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL6.pdf) | [Notebook1](https://colab.research.google.com/drive/13mG65NNvyqW5PVNLKAzMmGgpuWF8wmkC?usp=sharing) | [Notebook2](https://colab.research.google.com/drive/1YvQqxYfnukqBOAIB7ZDmg__gRv44cYMV?usp=sharing) 
 + Attention and Context-based Embeddings | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL7.pdf)
-+ Non Supervised Learning.
++ Non Supervised Learning | [Slides](https://github.com/DeepLearningUB/DeepLearningUB.github.io/raw/master/DL8.pdf)
 
 ### Assignment
 + 1st assignment: Designing and training a neural network from scratch: [notebook](
